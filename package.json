@@ -6,6 +6,15 @@
   "repository": "https://github.com/18777293000/clone_blitz.git",
   "author": "杨铭 <webming@bitkan.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node scripts/start.js",
+    "dev": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "build:stage": "cross-env REACT_APP_NODE_ENV=stage node scripts/build.js",
+    "build:beta": "PUBLIC_URL=https://cdn.kanbi.net/cdn/ cross-env GENERATE_SOURCEMAP=false node scripts/build.js",
+    "build:prod": "cross-env GENERATE_SOURCEMAP=false REACT_APP_NODE=prod GENERATE_SOURCEMAP=false node scripts/build.js"
+  },
   "dependencies": {
     "@antv/f2": "3.8.8",
     "babel-plugin-transform-typescript-metadata": "0.3.1",
@@ -38,20 +47,6 @@
     "unfetch": "4.1.0"
   },
   "devDependencies": {
-    "@babel/core": "7.9.0",
-    "@svgr/webpack": "4.3.3",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/d3": "^5.7.2",
-    "@types/jquery": "^3.3.38",
-    "@types/lodash.kebabcase": "^4.1.6",
-    "@types/pako": "^1.0.1",
-    "@types/qrcode.react": "^1.0.1",
-    "@types/react-cropper": "^1.3.0",
-    "@types/react-transition-group": "^4.2.4",
-    "@typescript-eslint/eslint-plugin": "^2.10.0",
-    "@typescript-eslint/parser": "^2.10.0",
     "babel-eslint": "10.1.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.1.0",
@@ -100,11 +95,81 @@
     "ts-pnp": "1.1.6",
     "typescript": "^3.9.2",
     "url-loader": "2.3.0",
-    "webpack": "^4.43.0",
+    "webpack": "4.43.0",
     "webpack-bundle-analyzer": "^3.8.0",
     "webpack-deep-scope-plugin": "^1.6.2",
     "webpack-dev-server": "3.10.3",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "4.3.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firfox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jest-environment-jsdom-fourteen",
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
   }
 }

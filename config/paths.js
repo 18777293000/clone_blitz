@@ -21,6 +21,7 @@ const modleFileExtensions = [
   'web.ts',
   'ts',
   'web.tsx',
+  'tsx',
   'json',
   'web.jsx',
   'jsx'

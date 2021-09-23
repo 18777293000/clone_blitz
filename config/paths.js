@@ -13,7 +13,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
   process.env.PUBLIC_URL
 );
 
-const modleFileExtensions = [
+const moduleFileExtensions = [
   'web.mjs',
   'mjs',
   'web.js',
@@ -28,7 +28,7 @@ const modleFileExtensions = [
 ];
 
 const resolveModule = (resolveFn, filePath) => {
-  const extension = modleFileExtensions.find(extension => 
+  const extension = moduleFileExtensions.find(extension => 
     fs.existsSync(resolveFn(`${filePath}.${extension}`))
   );
   if(extension){
@@ -55,6 +55,6 @@ module.exports = {
   publicUrlOrPath,
 };
 
-module.exports.modleFileExtensions = modleFileExtensions;
+module.exports.moduleFileExtensions = moduleFileExtensions;
 
 

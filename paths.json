@@ -4,7 +4,7 @@
     "paths": {
       "api/*": ["src/api/*"],
       "frame/*": ["src/frame/*"],
-      "assets/*": ["src/asserts/*"],
+      "assets/*": ["src/assets/*"],
       "common/*": ["src/common/*"],
       "render/*": ["src/render/*"],
       "services/*": ["src/services/*"],

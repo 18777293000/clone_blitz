@@ -1,11 +1,11 @@
 {
   "extends": "./paths",
   "compilerOptions": {
-    "target": "ES5",
+    "target": "es5",
     "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -23,8 +23,6 @@
   },
   "include": [
     "src"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }
+

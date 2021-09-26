@@ -1,0 +1,27 @@
+@import 'frame/style/color.scss';
+.lwstrade-notices{
+  min-height: 100%;
+  background-color: $B4;
+
+  &-head {
+    background-color: $B4;
+  }
+
+  &-wrap{
+    max-width: 1440px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 30px;
+
+    li {
+      width: 100%;
+      overflow: hidden;
+      padding: 15px 0;
+      border-bottom: 1px solid $L1;
+
+      a {
+        color: $T2;
+      }
+    }
+  }
+}

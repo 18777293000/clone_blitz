@@ -97,7 +97,7 @@ export class LocalStorageService implements IStorageService {
   }
 
   get(key: string, scope: StorageScope, fallbackValue: string): string;
-  get(key: string, scope: StorageScope, fallbackValue: string): string | undefined {
+  get(key: string, scope: StorageScope, fallbackValue?: string): string | undefined {
     const value = this.getCache(scope).get(key);
 
     if(isUndefinedOrNull(value)){
@@ -105,5 +105,64 @@ export class LocalStorageService implements IStorageService {
     }
 
     return value;
+  }
+
+  getBoolean(key: string, scope: StorageScope, fallbackValue: boolean): boolean;
+  getBoolean(key: string, scope: StorageScope, fallbackValue?: boolean): boolean | undefined{
+    const value = this.getCache(scope).get(key);
+
+    if(isUndefinedOrNull(value)){
+      return fallbackValue;
+    }
+
+    return value === 'true';
+  }
+
+  getNumber(key: string, scope: StorageScope, fallbackValue: number): number;
+  getNumber(key: string, scope: StorageScope, fallbackValue?: number): number | undefined{
+    const value = this.getCache(scope).get(key);
+
+    if(isUndefinedOrNull(value)){
+      return fallbackValue;
+    }
+
+    return parseInt(value, 10);
+  }
+
+  store(key: string, value: string | boolean | number | undefined | null, scope: StorageScope): Promise<void> {
+    if(isUndefinedOrNull(value)){
+      return this.remove(key, scope);
+    }
+
+    const valueStr = String(value);
+
+    const currentValue = this.getCache(scope).get(key);
+    if(currentValue === valueStr){
+      return Promise.resolve();
+    }
+
+    this.getCache(scope).set(key, value);
+
+    return Promise.resolve();
+  }
+
+  remove(key: string, scope: StorageScope): Promise<void> {
+    this.getCache(scope).delete(key);
+
+    return Promise.resolve();
+  }
+
+  logStorage(): void{
+    logStorage(this.globalCache.asMap(), this.workspaceCache.asMap(), 'browserLocalStorage', 'browserSessionStorage');
+  }
+
+  flush(): void{
+  }
+
+  isNew(): boolean{
+    return true;
+  }
+
+  async close(): Promise<void>{
   }
 }

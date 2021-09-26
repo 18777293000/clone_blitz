@@ -1,0 +1,19 @@
+@import 'frame/style/color.scss';
+
+.lwsreact-breadcrumb{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: $B1;
+  color: $T1;
+  padding: 0 30px;
+  border-bottom: 1px solid $L1;
+  text-transform: capitalize;
+  font-size: 14px;
+
+  a{
+    color: $T14;
+  }
+
+}

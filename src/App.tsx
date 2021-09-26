@@ -6,17 +6,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { globalConfigerviceFactory } from "./services/global/config";
 
 const Notice = lazy(() => import('./render/help/pages/notices/notices'));
-
+const NoticesDetail = lazy(() => import('./render/help/pages/notices.detail/notices.detail'));
 
 const App = () => {
+  const basename = '';
 
   return (
     <div>
       <BrowserRouter>
         <Suspense fallback={ null }>
-          <Route path="/notices" element={ <Notice /> } />
+          <Routes basename={ basename }>
+            <Route path="/notices" element={ <Notice /> } />
+            <Route path='/notices/detail' element={ <NoticesDetail/> } />
+          </Routes>
         </Suspense>
       </BrowserRouter>
+      
     </div>
   )
 };

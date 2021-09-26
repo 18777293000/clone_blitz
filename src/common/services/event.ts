@@ -34,4 +34,24 @@ export class BKEvent implements IBKEvent {
       listeners[type].push(listener);
     }
   }
+
+  addEventListener(type: string, listener: (event: BKEventType) => void) {
+    const listeners = this._listeners;
+
+    if(listeners[type] === undefined){
+      listeners[type] = [];
+    }
+
+    if(listeners[type].indexOf(listener) === -1) {
+      listeners[type].push(listener);
+    }
+  }
+
+  has(type: string, listener: (event: BKEventType) => void) {
+    if(this._listeners === undefined) return false;
+
+    const listeners = this._listeners;
+
+    return listeners[type] !== undefined && 
+  }
 }

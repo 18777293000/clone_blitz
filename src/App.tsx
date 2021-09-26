@@ -8,6 +8,8 @@ import { globalConfigerviceFactory } from "./services/global/config";
 const Notice = lazy(() => import('./render/help/pages/notices/notices'));
 const NoticesDetail = lazy(() => import('./render/help/pages/notices.detail/notices.detail'));
 
+// const bkevent = 
+
 const App = () => {
   const basename = '';
 

@@ -52,6 +52,21 @@ export class BKEvent implements IBKEvent {
 
     const listeners = this._listeners;
 
-    return listeners[type] !== undefined && 
+    return listeners[type] !== undefined && listeners[type].indexOf( listener ) !== -1;
+  }
+
+  remove(type: string, listener: (event: BKEventType) => void) {
+    if(this._listeners === undefined) return;
+
+    const listeners = this._listeners;
+    const listenerArray = listeners[type];
+
+    if(listenerArray !== undefined) {
+      const index = listenerArray.indexOf( listener );
+
+      if(index !== -1) {
+        listenerArray.splice( index, 1 );
+      }
+    }
   }
 }

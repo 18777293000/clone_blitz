@@ -4,11 +4,12 @@ import { useObservable } from 'rxjs-hooks';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { globalConfigerviceFactory } from "./services/global/config";
+import { bkEventServiceFactory } from "common/services/event";
 
 const Notice = lazy(() => import('./render/help/pages/notices/notices'));
 const NoticesDetail = lazy(() => import('./render/help/pages/notices.detail/notices.detail'));
 
-// const bkevent = 
+const bkevent = bkEventServiceFactory();
 
 const App = () => {
   const basename = '';

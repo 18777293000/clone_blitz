@@ -48,3 +48,7 @@ export class CommandManagerService implements ICommandManagerService {
     exeCommand?.exe(...args);
   }
 }
+
+export const commandManagerServiceFactory = () => {
+  return container.resolve(CommandManagerService);
+}

@@ -7,6 +7,8 @@ import { globalConfigerviceFactory } from "./services/global/config";
 import { bkEventServiceFactory } from "./common/services/event";
 import { userServiceFactory } from "./services/account/user";
 import { tradeConfigServiceFactory } from "./services/global/trade.config";
+import { commandManagerServiceFactory } from "./common/services/command";
+import { WatchUserActionServiceFactory } from "./services/watch.user.action";
 
 const Notice = lazy(() => import('./render/help/pages/notices/notices'));
 const NoticesDetail = lazy(() => import('./render/help/pages/notices.detail/notices.detail'));
@@ -18,6 +20,12 @@ const userService = userServiceFactory();
 globalConfigerviceFactory();
 
 const tradeConfigService = tradeConfigServiceFactory();
+
+const commandManagerService = commandManagerServiceFactory();
+
+const WatchUserActionService = WatchUserActionServiceFactory();
+
+
 
 const App = () => {
   const basename = '';

@@ -14,6 +14,8 @@ const bkevent = bkEventServiceFactory();
 
 const userService = userServiceFactory();
 
+globalConfigerviceFactory();
+
 const App = () => {
   const basename = '';
 

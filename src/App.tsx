@@ -5,11 +5,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { globalConfigerviceFactory } from "./services/global/config";
 import { bkEventServiceFactory } from "./common/services/event";
+import { userServiceFactory } from "./services/account/user";
 
 const Notice = lazy(() => import('./render/help/pages/notices/notices'));
 const NoticesDetail = lazy(() => import('./render/help/pages/notices.detail/notices.detail'));
 
 const bkevent = bkEventServiceFactory();
+
+const userService = userServiceFactory();
 
 const App = () => {
   const basename = '';

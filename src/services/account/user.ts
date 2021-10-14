@@ -82,6 +82,22 @@ export class UserAPIService implements IUserAPIService{
     return user;
   }
 
+  public setToken(token: UserToken, exprie_at: string){
+    const endTime = new Date(exprie_at).getTime();
+
+    this.storageService.store('bk-socket-token', JSON.stringify({expirytime: endTime, value: token}), StorageScope.GLOBAL);
+  }
+
+  public updateProfile(){
+    this.getProfile();
+  }
+
+  public setSocketToken(token: UserToken, expire_at: string){
+    const endTime = new Date(expire_at).getTime();
+
+    this.storageService.store('bk-socket-token', JSON.stringify({expirytime: endTime, vlaue: token}), StorageScope.GLOBAL);
+  }
+
   @throttle()
   public logout(){
     logout().then(() => {
@@ -95,12 +111,6 @@ export class UserAPIService implements IUserAPIService{
       //@ts-ignore
       window.bkchatFactory && window.bkchatFactory && window.bkchatFactory.destory(); // 退出登录后需要清楚所有的聊天链接、缓存、事件
     }).catch();
-  }
-
-  public setToken(token: UserToken, exprie_at: string){
-    const endTime = new Date(exprie_at).getTime();
-
-    this.storageService.store('bk-socket-token', JSON.stringify({expirytime: endTime, value: token}), StorageScope.GLOBAL);
   }
 
   get user(){

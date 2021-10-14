@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { globalConfigerviceFactory } from "./services/global/config";
 import { bkEventServiceFactory } from "./common/services/event";
 import { userServiceFactory } from "./services/account/user";
+import { tradeConfigServiceFactory } from "./services/global/trade.config";
 
 const Notice = lazy(() => import('./render/help/pages/notices/notices'));
 const NoticesDetail = lazy(() => import('./render/help/pages/notices.detail/notices.detail'));
@@ -15,6 +16,8 @@ const bkevent = bkEventServiceFactory();
 const userService = userServiceFactory();
 
 globalConfigerviceFactory();
+
+const tradeConfigService = tradeConfigServiceFactory();
 
 const App = () => {
   const basename = '';

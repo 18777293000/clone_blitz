@@ -1,0 +1,60 @@
+@import "./frame/style/color.scss";
+
+.bktrade-im {
+  position: fixed;
+  bottom: 0;
+  right: 10px;
+  display: none;
+  width: 400px;
+  height: 550px;
+  background-color: #eeeeee;
+  box-shadow: 3px 3px 10px rgba(0, 0 ,0, .5);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  overflow: hidden;
+
+  &-header {
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $primary-color;
+    color: #fff;
+    font-size: 14px;
+    padding: 0 10px;
+
+    &-close {
+      cursor: pointer;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+    }
+  }
+
+  &-content {
+    border: 1px solid rgb(109, 106, 106);
+    width: 100%;
+  }
+}
+
+.animate__fadeOutDown{
+  animation-name: fadeOutDown;
+  animation-duration: 0.4s;
+}
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}

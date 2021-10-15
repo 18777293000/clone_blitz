@@ -116,7 +116,6 @@ class BKRequest implements IBKRequest {
 
   private responseInterceptor(r: any, url: string) {
     const responseInterceptors = this._interceptors.response;
-
     responseInterceptors.forEach(interceptor => {
       r = interceptor(r, url);
     });
@@ -130,7 +129,6 @@ class BKRequest implements IBKRequest {
       headers: Object.assign({}, headers),
       body
     });
-
     body instanceof FormData && delete config.headers['Content-Type'];
 
     return fetch(url, {
@@ -171,7 +169,6 @@ class BKRequest implements IBKRequest {
     const httpXHR = this.httpStatusManager.get(key);
     const nowTime = new Date().getTime();
     const { dedupingInterval = 2000 } = cacheConfig || { dedupingInterval: 2000 };
-
     if(httpXHR && (httpXHR.status === 'complete' && httpXHR.expries < nowTime)){
       this.httpStatusManager.delete(key);
     }
@@ -195,7 +192,7 @@ class BKRequest implements IBKRequest {
     return promiseFn.then(r => {
       this.httpStatusManager.set(key, {
         status: 'complete',
-        promise: Promise.resolve(),
+        promise: Promise.resolve(r),
         expries: nowTime + dedupingInterval,
       });
       return r;

@@ -1,7 +1,7 @@
 import { get, post } from '../frame/utils/http';
 
 const Utf8 = require('crypto-js/enc-utf8');
-const Base64 = require('crypot-js/enc-base64');
+const Base64 = require('crypto-js/enc-base64');
 
 export const getProfile = () => {
   const url = `proxy/v2/user/account/m_profile`;

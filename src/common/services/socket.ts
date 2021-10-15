@@ -38,7 +38,7 @@ export class SocketService implements ISocketService{
   public events: any = {};
 
   constructor(
-    @inject('ScoketConfig') private socketConfig: ISocketConfig
+    @inject('SocketConfig') private socketConfig: ISocketConfig
   ){}
 
   private connect():void{
@@ -104,14 +104,14 @@ export class SocketService implements ISocketService{
     }
   }
 
-  private multiplex(subMsg: ()=> any, unsubMsg: () => any, isCloseStream = true):any{
+  private multiplex(subMsg: () => any, unsubMsg: () => any, isCloseStream = true) {
     this.uuid = this.uuid + 1;
     const uuid = this.uuid + '';
 
     this.undo[uuid] = new Observable((observer: Observer<any>) => {
-      if(this.socket && this.socket.readyState === 1){
+      if (this.socket && this.socket.readyState === 1) {
         this.socket.send(JSON.stringify(subMsg()));
-      }else{
+      } else {
         this.isError = true;
       }
       const subscription = this.observer.subscribe((res: any) => {
@@ -119,14 +119,14 @@ export class SocketService implements ISocketService{
       });
 
       return () => {
-        if(isCloseStream && this.socket && this.socket.readState === 1){
+        if (isCloseStream && this.socket && this.socket.readyState === 1) {
           this.socket.send(JSON.stringify(unsubMsg()));
         }
         subscription.unsubscribe();
         delete this.undo[uuid];
-      }
+      };
     });
-
+    
     return this.undo[uuid];
   }
 
@@ -203,32 +203,36 @@ export class SocketService implements ISocketService{
    * 
    * @memberOf SocketService
    */
-  observe(msg: any, isCloseStream = true):Observable<any> {
-     let observer = this.multiplex(()=>{msg}, ()=>{
-       msg.type = 'cancel';
-       delete msg.deflate;
-       return msg;
-     }, isCloseStream).pipe(
-       switchMap((response: any) => {
-         try{
-           const result$ = typeof response === 'string' ? of(JSON.parse(response)) : this.inflate(response);
-           return result$;
-         }catch(error){
-           return of(null);
-         }
-       }),
-       filter(res => !!res),
-       filter((res: any) => {
-         const tempMsg = JSON.parse(JSON.stringify(msg));
-         const tempRes = JSON.parse(JSON.stringify(res));
+   observe(msg: any, isCloseStream = true) {
+    let observer = this.multiplex(
+      () => ( msg ),
+      () => {
+        msg.type = 'cancle';
+        delete msg.deflate;
+        return msg;
+      },
+      isCloseStream
+    ).pipe(
+      switchMap((response: any) => {
+        try {
+          const result$ = typeof response === 'string' ? of(JSON.parse(response)) : this.inflate(response);
+          return result$;
+        } catch (error) {
+          return of(null);
+        }
+      }),
+      filter(res => !!res),
+      filter((res: any) => {
+        const tempMsg = JSON.parse(JSON.stringify(msg));
+        const tempRes = JSON.parse(JSON.stringify(res));
 
-         const msgType = tempMsg.subname || tempMsg.sub || tempMsg.type;
-         const resType = tempRes.sub || tempRes.type;
+        const msgType = tempMsg.subname || tempMsg.sub || tempMsg.type;
+        const resType = tempRes.sub || tempRes.type;
 
-         return resType && msgType && (resType === msgType);
-       })
-     );
-     return observer;
+        return resType && msgType && (resType === msgType);
+      })
+    );
+    return observer;
   }
 
   get status$() {

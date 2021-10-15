@@ -1,6 +1,6 @@
 import { BehaviorSubject } from "rxjs";
 import { container, singleton } from "../../common/services/di";
-import { startupHTTP } from "../../frame/utils/http";
+import { startupHTTP, logHTTPCache } from "../../frame/utils/http";
 import type { ITradeTicker } from '../../types/trade';
 import { getPrice, getRates, getSymbols } from '../../api/trade';
 import { Numeric } from "d3";
@@ -78,7 +78,6 @@ export class TradeConfigService {
       startupHTTP(ratesKey, ratesPromise, { dedupingInterval: 1000 * 60 * 10 }),
     ]).then(([ tickers, symbols, rates ]: any) => {
       if(!tickers || !symbols || !rates){ return };
-
       const tickerResult: any = {};
       const increases: any[] = [];
       const decreases: any[] = [];

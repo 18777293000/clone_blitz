@@ -39,13 +39,13 @@ export class OrderStreamService {
   }
 
   public observe(onUpdate: Function):void{
-    this.orders$$.subscribe((order: any) => {
+    this.orders$$ && this.orders$$.subscribe && this.orders$$.subscribe((order: any) => {
       order && onUpdate(order);
     })
   }
 
   public fiatObserve(onUpdate: Function):void {
-    this.otcOrders$$.subscribe((order: any) => {
+    this.otcOrders$$ && this.otcOrders$$.subscribe && this.otcOrders$$.subscribe((order: any) => {
       order && onUpdate(order);
     })
   }

@@ -25,4 +25,60 @@ export class OrderStreamService {
   private tradeSocket = socketManagerManager().get('fsg.socket');
   private userService = userServiceFactory();
   private globalConfigService = globalConfigerviceFactory();
+
+  constructor(
+    private storageService: LocalStorageService
+  ){
+    this.observe(() => {});
+    this.fiatObserve(() => {});
+  };
+
+  destory(){
+    this.unObserve();
+    this.fiatUnObserve();
+  }
+
+  public observe(onUpdate: Function):void{
+    this.orders$$.subscribe((order: any) => {
+      order && onUpdate(order);
+    })
+  }
+
+  public fiatObserve(onUpdate: Function):void {
+    this.otcOrders$$.subscribe((order: any) => {
+      order && onUpdate(order);
+    })
+  }
+
+  public unObserve():void {
+    this.orders$$ && this.orders$$.unsubscribe && this.orders$$.unsubscribe();
+  }
+
+  public fiatUnObserve():void {
+    this.otcOrders$$ && this.otcOrders$$.unsubscribe && this.otcOrders$$.unsubscribe();
+  }
+
+  private deal(order: any):void {
+    const avprice = (order.std_done_amount * 1 !== 0 && order.done_amount * 1 !== 0) ? formatNumber(order.std_done__amount / order.done_amount, '1.2-10') : 0;
+    // this.notifyService ...
+    console.log('notifyService deal');
+  }
+
+  private cancel(order: any):void {
+    const avprice = (order.std_done_amount * 1 !== 0 && order.done_amount * 1 !== 0) ? formatNumber(order.std_done_amount / order.done_amount, '1.2-10') : 0;
+    console.log('notifyService deal');
+  }
+
+  private otcNotice(order: any):void {
+    const noticeKey: any = Object.keys(noticeMsg);
+    const id = this.userService.user && this.userService.user.id ? +this.userService.user.id : 0;
+    if(noticeKey.indexOf(order.status + '') > -1 && id !== order.opUserId * 1){
+      const lang = this.globalConfigService.lang || 'zh';
+      console.log('noticeService');
+    }
+  }
+}
+
+export const orderStreamServiceFactory = () => {
+  return container.resolve(OrderStreamService);
 }

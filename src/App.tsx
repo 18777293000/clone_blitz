@@ -43,7 +43,7 @@ const fgsSocket = initialFgsSocketConfigSocket();
 fgsSocket.startup();
 socketmanagerService.register('fgs.socket', fgsSocket);
 const tradeSocket = initialTradeSocket();
-tradeSocket.startup();
+// tradeSocket.startup(); //先关了，数据数据用不上，还老是抱错
 socketmanagerService.register('trade.socket', tradeSocket);
 
 const orderStreamService = orderStreamServiceFactory();

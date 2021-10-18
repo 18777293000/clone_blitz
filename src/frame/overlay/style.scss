@@ -1,0 +1,75 @@
+@import "../style/color.scss";
+
+$overlay-option-bg: $B4;
+
+.bkreact-overlay {
+  position: absolute;
+  color: $T3;
+  border-radius: 3px;
+  padding: 7px 0;
+  background-color: $B4;
+  line-height: 1;
+  z-index: 999;
+  box-shadow: 1px 1px 3px black, -1px 2px 3px black;
+
+  &-hidden {
+    display: none;
+  }
+
+  &-option {
+    width: 100%;
+    padding: 3px 23px;
+    color: $T1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    line-height: 18px;
+    &:hover{
+      color: #fff;
+    }
+  }
+
+  &.appear, &.enter {
+    opacity: 0;
+		transform: 'scale3d(1, .8, 1)';
+    animation-duration: 0.25s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.215, .61, .355, 1);
+    animation-play-state: paused;
+  }
+  &.appear-active, &.enter-active {
+    opacity: 1;
+		transform: 'scale3d(1, 1, 1)';
+    animation-play-state: running;
+  }
+
+  &.leave {
+    animation-duration: 0.25s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.645, .045, .355, 1);
+    animation-play-state: paused;
+  }
+  &.leave-active {
+    animation-play-state: running;
+  }
+
+  &-placement {
+    &-bottomLeft, &-bottomRight {
+      &.appear-active, &.enter-active {
+        animation-name: slideDownIn;
+      }
+      &.leave-active {
+        animation-name: slideDownOut;
+      }
+    }
+    &-topLeft, &-topRight {
+      &.appear-active, &.enter-active {
+        animation-name: slideDownIn;
+      }
+      &.leave-active {
+        animation-name: slideDownOut;
+        animation-play-state: running;
+      }
+    }
+  }
+}

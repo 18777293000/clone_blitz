@@ -1,0 +1,25 @@
+@import '../style/color.scss';
+
+.bkreact-select {
+
+  &-option{
+    padding: 12px 23px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover{
+      background-color: rgba($color: $B5, $alpha: .5);
+    }
+
+    &-disabled{
+      color: $T3;
+    }
+
+    &-split_line{
+      border-bottom: 2px solid $L1;
+    }
+  }
+  &-option.active {
+    color: red;
+  }
+}

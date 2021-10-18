@@ -1,5 +1,33 @@
 @import "./frame/style/color.scss";
 
+body {
+  //不知道为啥，body里面会有一个margin 8px，我都找不到哪儿来的
+  margin: 0px;
+}
+
+html ::-webkit-scrollbar{
+  width: 50px;
+  height: 5px;
+}
+html ::-webkit-scrollbar, html ::-webkit-scrollbar-track{
+  background-color: transparent;
+}
+html.en-us ::-webkit-scrollbar,html ::-webkit-scrollbar-thumb {
+  width: 5px;
+  height: 5px;
+  background-color: rgba(127,143,164,.4)
+}
+
+html.en-us.hb-night ::-webkit-scrollbar-thumb {
+  background-color: #2e3753
+}
+
+.bktrade{
+  background-color: $B1;
+  min-height: 100vh;
+  min-width: 1190px;
+}
+
 .bktrade-im {
   position: fixed;
   bottom: 0;

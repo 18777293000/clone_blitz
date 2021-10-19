@@ -23,6 +23,7 @@ export class CommandManagerService implements ICommandManagerService {
   }
 
   public register(Command: InjectionToken<ICommand>) {
+    //container.resolve的作用，自动生成一个类，包含implement这些信息,然后自动生成类里面需要的实例
     let tempCommand: ICommand | null = container.resolve(Command);
 
     if(this.get(tempCommand.command)){
@@ -39,8 +40,10 @@ export class CommandManagerService implements ICommandManagerService {
   }
 
   public exe(command: string, ...args: any){
+    console.log('command...');
     const exeCommand = this.get(command);
-
+    //@ts-ignore
+    console.log(1.2, this.commands);
     if(!exeCommand){
       throw(new Error("命令没注册"))
     };

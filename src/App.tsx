@@ -19,6 +19,8 @@ import { cleatHTTPCache } from './frame/utils/http';
 
 import { BKTradeHeader } from './render/layout/components/header/header';
 
+import Help from './render/help';
+
 const Notice = lazy(() => import('./render/help/pages/notices/notices'));
 const NoticesDetail = lazy(() => import('./render/help/pages/notices.detail/notices.detail'));
 
@@ -132,6 +134,7 @@ const App = () => {
           <Routes basename={ basename }>
             <Route path="/notices" element={ <Notice /> } />
             <Route path='/notices/detail' element={ <NoticesDetail/> } />
+            <Route path='/help/*' element={ <Help /> } />
           </Routes>
         </Suspense>
       </div>

@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { Select } from '../../../../frame/select';
 import { Option } from '../../../../frame/select/option';
 import { Button } from "../../../../frame/button/button";
+import { CommonCommands } from "../../../../common/commands/common";
 
 const session = new Storage('session');
 
@@ -50,8 +51,8 @@ export const BKTradeHeader = () => {
       i18nService.current = null;
     }
   }, []);
-
-  console.log(1, user);
+  const str = 10.11;
+  //@ts-ignore
 
   return (
     <div className='bktrade-header'>
@@ -68,18 +69,18 @@ export const BKTradeHeader = () => {
             !user ? 
             <>
               <li className={ `${ pathname.indexOf('/login') >= 0 ? 'active' : '' }` }>
-                <Button type='text' size='xs' onClick={() => console.log('123')}>{'登陆'}</Button>
+                <Button type='text' size='xs' onClick={() => login()}>{'登陆'}</Button>
               </li>
               <li className={ `${ pathname.indexOf('/signup') >= 0 ? 'active-register' : 'normal' }` }>
-                <button>345</button>
+                <Button type='text' size='xs' onClick={() => login('signup')}>{"注册"}</Button>
               </li>
             </>
             : <>
-              <div>
-                456
-              </div>
+              <li className={ `${pathname.indexOf('/finance') >= 0 ? 'active' : ''}` }><Link to='finance'>{"资产"}</Link></li>
+              <li className={ `${ pathname.indexOf('/user') >= 0 ? 'active' : '' }` }>{ "用户" }</li>
             </>
           }
+          <li onClick={ () => { commandManagerService.current.exe(CommonCommands.SHOW_SETING_DIALOG, 'open')} }>{"设置"}</li>
         </ul>
       </div>
     </div>

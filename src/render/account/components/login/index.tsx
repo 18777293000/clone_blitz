@@ -5,6 +5,10 @@ import { Button } from "../../../../frame/button/button";
 export default ({onSuccess = () => {}, I18n, isPop = false }: { onSuccess?: Function, I18n: any, isPop?: boolean }) => {
 
   const [ loginStatus, loginStatusSet ] = useState<null | 1 | 2 | 3 | 4>(null);
+
+  const changeLoginStatus = (status: null | 1 | 2| 3 | 4) => {
+    loginStatusSet(status);
+  }
   return (
     <>
       <div className='bktrade-account-login'>

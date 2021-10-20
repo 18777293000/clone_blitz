@@ -40,10 +40,8 @@ export class CommandManagerService implements ICommandManagerService {
   }
 
   public exe(command: string, ...args: any){
-    console.log('command...');
     const exeCommand = this.get(command);
     //@ts-ignore
-    console.log(1.2, this.commands);
     if(!exeCommand){
       throw(new Error("命令没注册"))
     };

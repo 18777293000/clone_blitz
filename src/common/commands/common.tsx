@@ -22,7 +22,6 @@ export class GlobalSetingDialogCommand implements ICommand {
 
   private open(){
     const lang = this.globalConfig.lang;
-    console.log(1, lang);
     this.dialogIns = dialog({
       model: DialogModel.minWin,
       title: lang === 'zh' ? '设置' : 'Settings',

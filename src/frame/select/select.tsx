@@ -44,15 +44,15 @@ export class Select extends React.Component<SelectProps>{
 
   constructor(props: SelectProps){
     super(props);
-
+    
     if(this.props.loading){return};
     const defaultVal = this.querySelectionByValue(props.value);
     this.state.selection = defaultVal;
   }
 
   private querySelectionByValue(value: any): any{
+    if(value === undefined){return};
     const { children } = this.props;
-
     if(typeof children.find !== 'function'){return null};
 
     const child = children.find((element: any) => {
@@ -80,15 +80,16 @@ export class Select extends React.Component<SelectProps>{
 
       return React.cloneElement(child, props);
     });
-
+    console.log('items', items);
     this.setState({ options: items });
   }
 
-  private onOptionClick(item: any):void{
-    const { onChange = function(){} } = this.props;
-    let selection = !item.disabled ? { ...this.state.selection, item: item } : { ...this.state.selection };
+  private onOptionClick(item: any) {
+    const { onChange = function() {} } = this.props;
+    let selection = !item.disabled ? {...this.state.selection, item: item} : {...this.state.selection};
     this._lastSelection = selection;
-    this.setState({ visible: false, selection, keyword: '' });
+    this.setState({ visible: false , selection, keyword: '' });
+    onChange(item);
   }
 
   public clickHandler():void{
@@ -127,7 +128,7 @@ export class Select extends React.Component<SelectProps>{
 
     return (
       <button type='button' 
-        className={ `bkreact-select bkreact-selectbutton ${className}` }
+        className={ `bkreact-select bkreact-select-button ${className}` }
         onClick={ this.clickHandler.bind(this) }
       >
         { selection && showValue ? selection?.value : selection?.label }

@@ -1,9 +1,6 @@
-@import "../style/color.scss";
+@import '../style/color.scss';
 
 .bkreact-select {
-  position: relative;
-  cursor: pointer;
-  color: $T1;
 
   &-button {
     position: relative;
@@ -17,12 +14,15 @@
     text-align: left;
     padding-left: 15px;
   }
-  
+
   .bktrade-icon-drop_dow {
     display: block;
     position: absolute;
     right: 10px;
     top: 50%;
+    padding: 6px;
+    border-radius: 50%;
+    background-color: red;
     transition: all .4s;
     transform: translateY(-50%) rotate(0deg);
     font-size: 16px;
@@ -30,19 +30,7 @@
   .bktrade-icon-drop_dow.active {
     transform: translateY(-50%) rotate(180deg);
   }
-  &-input {
-    width: 100%;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    color: inherit;
-    padding-left: 10px;
-    font-size: 14px;
 
-    &::placeholder {
-      color: $T1;
-    }
-  }
   &-options {
     background-color: $B4;
     .bkreact-overlay-content {
@@ -58,19 +46,36 @@
       background-color: $B4;
     }
   }
-  &-option {
+
+  &-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: inherit;
+    padding-left: 10px;
+    font-size: 14px;
+
+    &::placeholder {
+      color: $T1;
+    }
+  }
+
+  &-option{
+    background-color: red;
     padding: 12px 23px;
     cursor: pointer;
     font-size: 14px;
 
-    &:hover {
-      // background-color: $BT1L;
+    &:hover{
       background-color: rgba($color: $B5, $alpha: .5);
     }
-    &-disabled {
+
+    &-disabled{
       color: $T3;
     }
-    &-split_line {
+
+    &-split_line{
       border-bottom: 2px solid $L1;
     }
   }

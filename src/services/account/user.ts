@@ -95,7 +95,7 @@ export class UserAPIService implements IUserAPIService{
   public setSocketToken(token: UserToken, expire_at: string){
     const endTime = new Date(expire_at).getTime();
 
-    this.storageService.store('bk-socket-token', JSON.stringify({expirytime: endTime, vlaue: token}), StorageScope.GLOBAL);
+    this.storageService.store('bk-socket-token', JSON.stringify({expirytime: endTime, vlaue: token}), StorageScope.GLOBAL)
   }
 
   @throttle()

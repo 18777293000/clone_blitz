@@ -20,6 +20,7 @@ import { cleatHTTPCache } from './frame/utils/http';
 import { BKTradeHeader } from './render/layout/components/header/header';
 
 import Help from './render/help';
+import Account from './render/account';
 
 const Notice = lazy(() => import('./render/help/pages/notices/notices'));
 const NoticesDetail = lazy(() => import('./render/help/pages/notices.detail/notices.detail'));
@@ -132,6 +133,7 @@ const App = () => {
       <div className='bktrade-content' style={{height: `calc(${computeContentHeight()})`}}>
         <Suspense fallback={ null }>
           <Routes basename={ basename }>
+            <Route path='/account/*' element={ <Account /> } />
             <Route path="/notices" element={ <Notice /> } />
             <Route path='/notices/detail' element={ <NoticesDetail/> } />
             <Route path='/help/*' element={ <Help /> } />

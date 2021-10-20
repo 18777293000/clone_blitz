@@ -51,8 +51,6 @@ export const BKTradeHeader = () => {
       i18nService.current = null;
     }
   }, []);
-  const str = 10.11;
-  //@ts-ignore
 
   return (
     <div className='bktrade-header'>
@@ -66,7 +64,7 @@ export const BKTradeHeader = () => {
 
         <ul className="bktrade-header-nav">
           {
-            !user ? 
+            user ? 
             <>
               <li className={ `${ pathname.indexOf('/login') >= 0 ? 'active' : '' }` }>
                 <Button type='text' size='xs' onClick={() => login()}>{'登陆'}</Button>
@@ -100,7 +98,7 @@ const TradeDropDown = ({I18n}:{I18n: any}) => {
       <Select className='bktrade-header-trade-dropdown-options'
         customOptions='bktrade-header-trade_dropwodn-options'
         model='dropdown'
-        trigger={ ['hover'] }
+        trigger={ ['click'] }
         onChange={(item: any) => window.open(item.value)}
         label={ <span>交易</span> }
         needArrow={ true }

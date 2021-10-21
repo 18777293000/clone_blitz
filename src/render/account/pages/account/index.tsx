@@ -7,6 +7,7 @@ import { enviroment } from "../../../../enviroments/enviroment";
 import { I18nServiceFactory } from "../../../../common/services/i18n";
 import { Storage } from "../../../../common/storage/local.storage";
 import { globalConfigerviceFactory } from "../../../../services/global/config";
+import { Tabs, TabItem } from "../../../../frame/tabs/tabs";
 
 import Login from '../../../../render/account/components/login';
 const session = new Storage('session');
@@ -39,6 +40,16 @@ export default ({type = 'login'} : { type: string }) => {
         </p>
         <div className='bktrade-account-form'>
           { switchComponent ? switchComponent : '' }
+        </div>
+        <div>
+          <Tabs value='yang'>
+            <TabItem label='yang' value='yang'>
+              <div>yang</div>
+            </TabItem>
+            <TabItem label='ming' value='ming'>
+              <div>ming</div>
+            </TabItem>
+          </Tabs>
         </div>
       </div>
     </div>

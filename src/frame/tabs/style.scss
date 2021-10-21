@@ -1,0 +1,51 @@
+@import '../style/color.scss';
+
+.bkreact-tabs{
+  position: relative;
+  &-menu{
+    border-bottom: 1px solid $L1;
+    transform: translate3d(0, 0, 0);
+    white-space: nowrap;
+    transition: transform 600ms ease 0s;
+    width: 100%;
+
+    &-wrap{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid red;
+    }
+
+    &-prev, &-next {
+      cursor: pointer;
+      z-index: 1;
+      width: 30px;
+      height: 30px;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover{
+        color: $T1;
+      }
+    }
+
+    &-prev{
+      .bkreact-icon-d_right{
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        box-shadow: -3px -3px 10px #babecc, 3px 3px 10px #fff;
+      }
+    }
+
+    &-next{
+      .bkreact-icon-d_right{
+        padding: 5px;
+        background-color: $primary-color;
+        border-radius: 50%;
+      }
+    }
+  }
+}

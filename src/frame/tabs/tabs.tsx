@@ -83,14 +83,11 @@ export function Tabs(props: TabsProps){
     const items = Children.toArray(children).filter((child: any) => {
       return child?.type === TabItem;
     });
-    return items.map((item: any, index: number) => {
-      active === item.props.value && <div 
-        key={ index }
-        { ...item.props }
-        className="bkreact-tabs-view_item"
-      >
-      </div>
-    })
+    return items.map((item: any, index:number) => {
+      if(active === item.props.value){
+        return <div key={ index } { ...item.props } className='bkreact-tabs-view_item'></div>
+      }
+    });
 
     /**eslint-disable */
   }, [ children, active ]);
@@ -122,6 +119,7 @@ export function Tabs(props: TabsProps){
 
   useEffect(() => {
     const max = (itemWidth - menuWidth) / (menuWidth * swiperWidthRatio);
+    console.log('item:', itemWidth, ' menu:', menuWidth);
     maxSet(max);
   }, [ itemWidth, menuWidth, swiperWidthRatio ]);
 
@@ -129,20 +127,22 @@ export function Tabs(props: TabsProps){
     <div className={'bkreact-tabs ' + className + (type && ` bkreact-tabs-${type}` )}>
       <div className={ `bkreact-tabs-menu-wrap ${menuWidth < itemWidth ? 'bkreact-tabs-menu-scroll' :  ''}` }>
         {
-          (menuWidth < itemWidth) ? 
+          // (menuWidth < itemWidth)
+          true ? 
           <div className={ `bkreact-tabs-menu-prev ${scrollSwiper <= 0 ? 'bkreact-tabs-menu-disable' : ''}` } onClick={ prev }>
             <span className='bkreact-icon-d_right'></span>
           </div>
           : null
         }
         <div className='bkreact-tabs-menu'
-          ref={ (node: any) => node && menuWidthSet(node.offsetWidth) }
+          ref={ (node: any) => { return node && menuWidthSet(node.offsetWidth)} }
           style={{ transform: `translate3d(-${ scrollSwiper * menuWidth * swiperWidthRatio }px, 0, 0)` }}
         >
           { memoTabs } 
         </div>
         {
-          menuWidth < itemWidth ?
+          // menuWidth < itemWidth
+          true ?
           <div className={ `bkreact-tabs-menu-next ${scrollSwiper >= max ? 'bkreact-tabs-menu-disable' : ''}`} onClick={ next }>
             <div className='bkreact-icon-d_right'></div>
           </div>

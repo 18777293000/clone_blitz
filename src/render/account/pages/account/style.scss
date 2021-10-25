@@ -60,7 +60,7 @@ $color-bg: #ebecf0;
   }
   &-form{
     margin-top: 10px;
-    padding: 30px 42px 44px 40px;
+    padding: 16px 28px 38px 26px;
     background-color: #ebecf0;
     border-radius: 10px;
     // box-shadow: -2px -2px 5px rgba(255, 255, 255, 1),
@@ -97,31 +97,6 @@ $color-bg: #ebecf0;
       border-radius:1px;
     }
 	}
-	.bkreact-tabs {
-		// margin-top: 30px;
-		// &-menu {
-		// 	border: none;
-		// }
-		// &-label {
-		// 	margin-right: 30px;
-		// 	font-size: 16px;
-		// 	color: $T3;
-		// 	font-weight: 400;
-		// 	cursor: pointer;
-		// 	padding: 0;
-		// }
-		// &-label.active {
-		// 	// color: #3a3ae5;
-		// 	color: $T14;
-		// 	font-size: 20px;
-		// 	font-weight: 600;
-		// 	background: none;
-		// }
-	}
-	.bkreact-form {
-		margin-top: 20px;
-
-	}
 	&-item-phone {
 		.bkreact-input {
 			&-after {
@@ -130,7 +105,7 @@ $color-bg: #ebecf0;
 				justify-content: center;
 			}
 			&-input {
-				padding-left: 75px!important;
+				// padding-left: 75px!important;
 			}
 		}
 		.vertical-line {

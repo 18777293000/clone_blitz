@@ -41,16 +41,6 @@ export default ({type = 'login'} : { type: string }) => {
         <div className='bktrade-account-form'>
           { switchComponent ? switchComponent : '' }
         </div>
-        <div>
-          <Tabs value='yang'>
-            <TabItem label='yang' value='yang'>
-              <div>yang</div>
-            </TabItem>
-            <TabItem label='ming' value='ming'>
-              <div>ming</div>
-            </TabItem>
-          </Tabs>
-        </div>
       </div>
     </div>
   )

@@ -119,7 +119,6 @@ export function Tabs(props: TabsProps){
 
   useEffect(() => {
     const max = (itemWidth - menuWidth) / (menuWidth * swiperWidthRatio);
-    console.log('item:', itemWidth, ' menu:', menuWidth);
     maxSet(max);
   }, [ itemWidth, menuWidth, swiperWidthRatio ]);
 
@@ -127,22 +126,24 @@ export function Tabs(props: TabsProps){
     <div className={'bkreact-tabs ' + className + (type && ` bkreact-tabs-${type}` )}>
       <div className={ `bkreact-tabs-menu-wrap ${menuWidth < itemWidth ? 'bkreact-tabs-menu-scroll' :  ''}` }>
         {
-          // (menuWidth < itemWidth)
-          true ? 
+          (menuWidth < itemWidth) ? 
+          // true ?
           <div className={ `bkreact-tabs-menu-prev ${scrollSwiper <= 0 ? 'bkreact-tabs-menu-disable' : ''}` } onClick={ prev }>
             <span className='bkreact-icon-d_right'></span>
           </div>
           : null
         }
-        <div className='bkreact-tabs-menu'
+        <div className='bkreact-tabs-menu-content'
           ref={ (node: any) => { return node && menuWidthSet(node.offsetWidth)} }
-          style={{ transform: `translate3d(-${ scrollSwiper * menuWidth * swiperWidthRatio }px, 0, 0)` }}
+          
         >
-          { memoTabs } 
+          <div className='bkreact-tabs-menu-content-swiper' style={{ transform: `translate3d(-${ scrollSwiper * menuWidth * swiperWidthRatio }px, 0, 0)` }}>
+            { memoTabs } 
+          </div>
         </div>
         {
-          // menuWidth < itemWidth
-          true ?
+          menuWidth < itemWidth ?
+          // true ?
           <div className={ `bkreact-tabs-menu-next ${scrollSwiper >= max ? 'bkreact-tabs-menu-disable' : ''}`} onClick={ next }>
             <div className='bkreact-icon-d_right'></div>
           </div>

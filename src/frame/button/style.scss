@@ -45,11 +45,13 @@
     }
   }
   &-primary{
-    color: $white-color;
-    background-color: $primary-color;
+    color: #babecc;
+    background-color: #ebecf0;
+    text-shadow: 1px 1px 0px #fff;
+    box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
 
     &:hover{
-      background-color: lighten($primary-color, 10%);
+      box-shadow: -2px -2px 5px #fff, 2px 2px 5px #babecc;
     }
   }
 
@@ -100,11 +102,19 @@
 
   &:disabled{
     cursor: not-allowed;
-    background-color: $B5 !important;
+    background-color: #ebecf0 !important;
     color: #4f566f !important;
+    &:hover{
+      box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
+    }
   }
 
   &-text:disabled{
     background-color: transparent !important;
+  }
+
+  &:active{
+    box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #fff;
+    font-size: small;
   }
 }

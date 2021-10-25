@@ -1,0 +1,133 @@
+@import '../style/color.scss';
+
+.bkreact-input{
+  display: block;
+  position: relative;
+  width: 100%;
+
+  &-wrap{
+    display: flex;
+    width: 100%;
+    position: relative;
+  }
+
+  &-input::-ms-clear, ::-ms-reveal{
+    display: none;
+  }
+  &-input{
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: #ebecf0;
+    border-radius: 10px;
+    color: #babecc;
+    text-shadow: 1px 1px 0px #fff;
+    background-image: none !important;
+    background-attachment: none !important;
+    resize: none;
+    padding: 10px;
+    transition: all 0.2s ease-in-out;
+    box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #fff;
+
+    &:focus{
+      box-shadow: inset 1px 1px 2px #babecc, inset -1px -1px 2px #fff;
+    }
+    &:disabled{
+      cursor: not-allowed;
+      border: 0.5px solid red;
+
+      &:hover{
+        border: 1px solid red;
+      }
+    }
+    &:read-only{
+      border: 1px solid skyblue;
+    }
+
+    &::-moz-placeholder{
+      color: #babecc;
+    }
+
+    &::-ms-input-placeholder{
+      color: #babecc;
+    }
+
+    &::-webkit-input-placeholder{
+      color: #babecc;
+    }
+  }
+  textarea {
+    padding: 10px;
+  }
+  &-after{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    color: $T3;
+    text-shadow: 1px 1px 0px #fff;
+	}
+	&-before{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+  }
+  &-subtract{
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: rgb(216, 46, 46);
+    border-radius: 50%;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+  &-add{
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: rgb(13, 196, 13);
+    &:hover{
+      cursor: pointer;
+    }
+  }
+  input[type=number] { -moz-appearance:textfield; }
+  input[type=number]::-webkit-inner-spin-button,
+	input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+	.bk-validata-error-text{
+    width: 100%;
+    color: $T8;
+    padding-top: 2px;
+  }
+}
+.bkreact-input-small {
+	.bkreact-input-before, .bkreact-input-input, .bkreact-input-after{
+		height: 35px;
+		line-height: 35px;
+	}
+	.bkreact-input-input{
+		padding: 0 14px;
+	}
+	textarea.bkreact-input-input{
+		padding: 5px 14px;
+    line-height: 1.6;
+	}
+}
+// .bkreact-input-normal{
+// 	.bkreact-input-before, .bkreact-input-input, .bkreact-input-after{
+// 		height: 20px;
+// 		line-height: 20px;
+// 	}
+// 	.bkreact-input-input{
+// 		padding: 0 10px 0 20px;
+// 	}
+// }

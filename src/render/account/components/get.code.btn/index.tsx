@@ -62,5 +62,77 @@ export default (props: GetCodeProps) => {
       I18nService.current = null;
       clearTimeout(timer.current);
     }
-  }, [])
+  }, []);
+
+  const countdown = () => {
+    const nextVal = totalTime.current - 1;
+    totalTime.current = nextVal;
+    if(nextVal <= 0){
+      isHadSendCodeSet(false);
+      CodeMsgSet(type === 'sms' ? '重新获取' : '使用语言验证');
+      onStateChange(false, verifyWay.current === 1);
+      clearTimeout(timer.current);
+      return;
+    }
+    CodeMsgSet(type === 'sms' ? `(${totalTime.current}s)${'重新获取'}` : `${'使用语音验证'}(${totalTime.current}S)`);
+    timer.current = setTimeout(() => {
+      countdown();
+    }, 1000);
+  };
+
+  const unsub = () => {
+    observerSub.current && observerSub.current.unsubscribe();
+  };
+
+  const success = (state: any) => {
+    verifyWay.current = state?.verify_way;
+    isHadSendCodeSet(true);
+    totalTime.current = 60;
+    countdown();
+    onSuccess(state);
+  };
+
+  const fail = (state: any) => {
+    onStateChange(false);
+    isHadSendCodeSet(false);
+    if(state === null){return};
+    alert(state);
+  };
+
+  const submit = () => {
+    onStateChange(true);
+    unsub();
+    isHadSendCodeSet(true);
+    observerSub.current = service?.getPhoneCode(api, Object.assign({}, account, {
+      uuid: 'web',
+      code_type: codeType,
+    }), needCheck).subscribe((flow: FlowState) => {
+      loadingSet(flow.code === 'running');
+      flow.code === 'success' && success(flow.state);
+      flow.code === 'fail' && fail(flow.state);
+      (flow.code === 'success' || flow.code === 'fail') && unsub();
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+      unsub();
+    }
+  }, []);
+
+  useEffect(() => {
+    if(isResend){
+      success('success');
+    }
+    /**eslint-disable */
+  }, [isResend, lang]);
+
+  return (
+    <div className='bktrade-get-code-btn'>
+      <button className={type} type='button' disabled={isHadSendCode || disabled} onClick={() => submit()}>
+        {loading ? <Loading /> : <span>{codeMsg}</span>}
+      </button>
+    </div>
+  )
 }

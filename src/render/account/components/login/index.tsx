@@ -6,9 +6,10 @@ import { Form, FormItem } from "../../../../frame/form";
 import { Input } from "../../../../frame/input/input";
 import { emailLoginService, phoneLoginService, createDoubleVerifyService } from '../../../../services/account/login';
 import { FlowState } from "../../../../common/services/workflow";
-import { GAVerifyService } from "../../../../services/account/double.verify";
+import { GAVerifyService, SMSVerifyService } from "../../../../services/account/double.verify";
 import { formatRules } from "../../utils";
 import { PhoneAccount, EmailAccount } from "../../../../types/account";
+import { SMSVerifyForm, GAVerifyForm } from "../double.verify";
 
 type LoginVerify = '0' | '1';
 
@@ -203,11 +204,20 @@ const DoubleVerifyFactory = ({account, params, onSubmit, I18n, onEmitStatus}: Do
   };
 
   const memoSMSForm = useMemo(() => {
-    return <div>smsform</div>
+    return <SMSVerifyForm
+      account={account}
+      I18n={I18n}
+      service={createDoubleVerifyService(SMSVerifyService)}
+      onSubmit={onSubmit}
+    />
   }, [I18n]);
 
   const memoGAForm = useMemo(() => {
-    return <div>gaform</div>
+    return <GAVerifyForm 
+      I18n={I18n}
+      service={createDoubleVerifyService(GAVerifyService)}
+      onSubmit={onSubmit}
+    />
   }, [I18n]);
 
   return (

@@ -3,8 +3,10 @@ import { Form, FormItem } from "../../../../frame/form";
 import { Input } from "../../../../frame/input/input";
 import { Button } from "../../../../frame/button/button";
 import { formatRules } from "../../utils";
+import CodeItem from '../code.item';
 import { IDoubleVerifyService } from '../../../../services/account/double.verify';
 import './style.scss';
+import { queryPhoneCode } from "../../../../api/account";
 
 interface GAVerifyFormProps {
   service: IDoubleVerifyService;
@@ -82,6 +84,15 @@ export const SMSVerifyForm = ({account, service, I18n, onSubmit}: SMSVerifyFormP
       <Form
         ref={(ref: any) => ref && service.registerValidate(() => ref.validate())}
       >
+        <CodeItem
+          api={queryPhoneCode}
+          rule={formatRules(rules.code, I18n)}
+          account={account}
+          codeType='login_verify'
+          placeholder={'请输入验证码'}
+          onChange={(value: any) => change(value, codeSet, 'sms_code')}
+          onSubmit={submit}
+        ></CodeItem>
         <FormItem>
           <div className='bktrade-account-btns'>
             <Button type='primary' isBlock={true} onClick={() => submit()}>确定</Button>

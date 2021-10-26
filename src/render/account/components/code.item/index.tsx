@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import './style.scss';
 import { Form, FormItem } from "../../../../frame/form";
+import { Input } from "../../../../frame/input/input";
 import { SMSCodeService, phoneCodeService, VoiceCodeService } from '../../../../services/account/phone.code';
 import { PhoneAccount, EmailAccount } from "../../../../types/account";
-import getCodeBtn from "../get.code.btn";
+import GetCodeBtn from "../get.code.btn";
 
 interface CodeItemProps {
   api?:(params?: any) => Promise<any>;
@@ -37,6 +38,53 @@ export default ({
   const [ voiceDisabled, voiceDisabledSet ] = useState<boolean>(true);
 
   const change = (type: string, value: boolean, voiceShow?: boolean) => {
-    // !!voiceShow && 
-  }
+    !!voiceShow && voiceShowSet(true);
+    type === 'sms' && voiceDisabledSet(value);
+    type === 'voice' && smsDisabledSet(value);
+  };
+
+  useEffect(() => {
+    smsDisabledSet(!accountValid);
+    voiceDisabledSet(!accountValid);
+  }, [accountValid]);
+  return (
+    <>
+      <FormItem rules={rule} label={label}>
+        <Input
+          type='text'
+          size='normal'
+          value={code}
+          onEnter={()=>onSubmit()}
+          onChange={(value: any) => {codeSet(value);onChange(value)}}
+          placeholder={placeholder}
+          after={
+            <GetCodeBtn
+              type='sms'
+              //@ts-ignore
+              api={api}
+              needCheck={needCheck}
+              codeType={codeType}
+              disabled={smsDisabled}
+              service={phoneCodeService(SMSCodeService)}
+              onStateChange={(value: boolean, voiceShow: boolean) => change('sms', value, voiceShow)}
+              onSuccess={ (result: any) => robotResultSet(result) }
+            />
+          }
+        ></Input>
+        {voiceShow && <GetCodeBtn
+            type='voice'
+            //@ts-ignore
+            api={api}
+            needCheck={needCheck}
+            account={account}
+            codeType={codeType}
+            disabled={voiceDisabled}
+            service={phoneCodeService(VoiceCodeService)}
+            onStateChange={(value: boolean) => change("voice", value)}
+            onSuccess={(result: any) => robotResultSet(result)}
+          />
+        }
+      </FormItem>
+    </>
+  )
 };

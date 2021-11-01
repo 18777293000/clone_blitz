@@ -111,4 +111,61 @@ export const queryPhoneCode = (params: any) => {
 //邮箱验证码：邮箱注册/忘记密码(需要人机校验)
 export const getEmailVerifyCode = (params: any) => {
   return post(`/proxy/v2/user/account/w_get_email_verify_code`, {body: params});
-}
+};
+
+// 手机验证码: 注册
+export const getSignupCode = (params: any) => {
+  const data = {
+    verify     : {
+      way: 0,
+    },
+    phoneNumber: {
+      country: params.country.replace('+', '00'),
+      number : params.number,
+    },
+  };
+  const obj = {
+    geetest_challenge: params.geetest_challenge,
+    geetest_validate: params.geetest_validate,
+    geetest_seccode: params.geetest_seccode,
+    data: data,
+  }
+  return post(`/proxy/v2/user/account/w_verify_phone`, {body: obj});
+};
+
+export const signup = async (reqUser: any) => {
+  const code = Auth.HmacSHA256(reqUser.code, enviroment.codeHashSalt);
+  const rsa: any = await createRSA();
+  const publicKey = '-----BEGIN PUBLIC KEY-----\n' + rsa.publicKey + '\n-----END PUBLIC KEY-----';
+  const wordArray = Utf8.parse(publicKey);
+  const auth = new Auth(reqUser.password, enviroment.salt, enviroment.publicKey, true);
+  const EHUP = auth.ehup();
+  const type = reqUser.phoneNumber ? 2 : 1;
+  const id = type === 2 ? (reqUser.areaCode.replace('+', '00') + reqUser.phoneNumber) : reqUser.email;
+  const params: any = {
+    identifier: {
+      type,
+      id,
+    },
+    name: reqUser.phoneNumber ? reqUser.phoneNumber : reqUser.name,
+    inviter_hid: reqUser.inviter_hid,
+    EHUP,
+    nationality: reqUser.coutryCode,
+    token_public: Base64.stringify(wordArray),
+  };
+  if(reqUser.phoneNumber){
+    params.verify = {
+      way: 0,
+      code: code,
+    };
+  }else {
+    params.code = code;
+  };
+  return post(`/proxy/v1/account/m_signup`, { body: {data: params} }).then(response => {
+    //@ts-ignore
+    const decrypt = new JSEncrypt();
+    decrypt.setPrivateKey(rsa.privateKey);
+    response.user.access_token = decrypt.decrypt(response.user.access_token);
+    return response;
+  });
+};

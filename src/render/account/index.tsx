@@ -27,6 +27,11 @@ export default () => {
               canActive={ () => auth$.pipe(map(val => !val)) }
              />
            } />
+           <Route path='/signup' element={
+             <AuthGuard Component={ <Account type='signup' /> }
+             canActive={() => auth$.pipe(map(val => !val))}
+             redirect='/' />
+           }></Route>
         </Routes>
       </Suspense>
     </div>

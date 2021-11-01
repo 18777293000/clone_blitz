@@ -11,6 +11,7 @@ import { formatRules } from "../../utils";
 import { PhoneAccount, EmailAccount } from "../../../../types/account";
 import { SMSVerifyForm, GAVerifyForm, DoubleVerify } from "../double.verify";
 
+
 type LoginVerify = '0' | '1';
 
 interface DoubleVerifySeting{
@@ -28,7 +29,6 @@ export default ({onSuccess = () => {}, I18n, isPop = false }: { onSuccess?: Func
   //   loginStatusSet(status);
   //   verifyTypeSet(type);
   // };
-
   const changeLoginStatus = (type: ''|'phone'|'google'|'email')=>{
 		verifyTypeSet(type)
   }
@@ -79,7 +79,6 @@ interface LoginFormProps {
 const LoginForm = ({I18n, type, onSuccess=()=>{}, OnChangeStatus=()=>{}}: LoginFormProps) => {
   const isPhone = type === 'phone';
   const service = useRef<any>(isPhone ? phoneLoginService() : emailLoginService());
-  console.log(1, service.current);
   const loginService = service.current;
   const rules = loginService.rules;
 
@@ -118,7 +117,6 @@ const LoginForm = ({I18n, type, onSuccess=()=>{}, OnChangeStatus=()=>{}}: LoginF
     const observer = loginService.flowStream();
     const subStream = observer.subscribe((state: FlowState) => {
       loadingSet(state.code === 'running');
-      console.log(2.1, state);
       if(state.code === 'fail' && state.state){
         if(state.state.code === 10){
           OnChangeStatus('');

@@ -9,7 +9,7 @@ import { FlowState } from "../../../../common/services/workflow";
 import { GAVerifyService, SMSVerifyService } from "../../../../services/account/double.verify";
 import { formatRules } from "../../utils";
 import { PhoneAccount, EmailAccount } from "../../../../types/account";
-import { SMSVerifyForm, GAVerifyForm } from "../double.verify";
+import { SMSVerifyForm, GAVerifyForm, DoubleVerify } from "../double.verify";
 
 type LoginVerify = '0' | '1';
 
@@ -22,10 +22,16 @@ interface DoubleVerifySeting{
 export default ({onSuccess = () => {}, I18n, isPop = false }: { onSuccess?: Function, I18n: any, isPop?: boolean }) => {
 
   const [ loginStatus, loginStatusSet ] = useState<null | 1 | 2 | 3 | 4>(null);
+  const [ verifyType, verifyTypeSet ] = useState<''|'phone'|'google'|'email'>('');
 
-  const changeLoginStatus = (status: null | 1 | 2| 3 | 4) => {
-    loginStatusSet(status);
-  };
+  // const changeLoginStatus = (status: null | 1 | 2| 3 | 4) => {
+  //   loginStatusSet(status);
+  //   verifyTypeSet(type);
+  // };
+
+  const changeLoginStatus = (type: ''|'phone'|'google'|'email')=>{
+		verifyTypeSet(type)
+  }
 
   const actionRender = () => {
     const { Link } = require('react-router-dom');
@@ -45,9 +51,8 @@ export default ({onSuccess = () => {}, I18n, isPop = false }: { onSuccess?: Func
     <>
       <div className='bktrade-account-login'>
         <p className='bktrade-account-title'>
-          <span className="title-text">
-            {loginStatus === null ? '登陆' : loginStatus === 1 || loginStatus === 3 ? '手机验证' : '谷歌验证'}
-          </span>
+          {/* <span className="title-text">{loginStatus === null ? '登陆' : loginStatus === 1 || loginStatus === 3 ? '手机验证' : '谷歌验证'}</span> */}
+					<span className="title-text">{!verifyType ? I18n['登录'] : verifyType === 'phone' ? I18n['手机验证'] : verifyType === 'google' ? I18n['谷歌验证'] : I18n['邮箱验证']}</span>
           <span className='title-line'></span>
         </p>
         <Tabs value={ 'phone' }>
@@ -79,11 +84,13 @@ const LoginForm = ({I18n, type, onSuccess=()=>{}, OnChangeStatus=()=>{}}: LoginF
   const rules = loginService.rules;
 
   const [ areaCode, areaCodeSet ] = useState("+65");
-  const [ doubleVerifyParams, doubleVerifyParamsSet ] = useState<DoubleVerifySeting | null>(null);
+  // const [ doubleVerifyParams, doubleVerifyParamsSet ] = useState<DoubleVerifySeting | null>(null);
   const [ username, usernameSet ] = useState<string>('');
   const [ password, passwordSet ] = useState<string>('');
   const [ loading, loadingSet ] = useState<boolean>(false);
   const [ loginFailed, loginFailedSet ] = useState<boolean | null>(false);
+	const [ verifyTypes, verifyTypesSet] = useState<any>()
+
 
   const map: any = {
     'areaCode': areaCodeSet,
@@ -114,7 +121,7 @@ const LoginForm = ({I18n, type, onSuccess=()=>{}, OnChangeStatus=()=>{}}: LoginF
       console.log(2.1, state);
       if(state.code === 'fail' && state.state){
         if(state.state.code === 10){
-          OnChangeStatus(null);
+          OnChangeStatus('');
           loginFailedSet(null);
         }
         const message = state.state.message ? state.state.message : String(state.state);
@@ -123,13 +130,26 @@ const LoginForm = ({I18n, type, onSuccess=()=>{}, OnChangeStatus=()=>{}}: LoginF
       if(state.code === 'success'){
         onSuccess();
       };
-      if(state.code === 'running' && state.state && state.state.child && state.state.child === 'doubleVerify'){
+      if(state.state && state.state.child && state.state.child === 'doubleVerify'){
         loginFailedSet(false);
-        const { data }: { data: DoubleVerifySeting } = state.state;
-        doubleVerifyParamsSet(data);
-        const status = +data.login_phone_verify === 1 && +data.login_google_verify === 0 ? 1 : +data.login_phone_verify === 0 && +data.login_google_verify === 1 ? 2: 3;
-        OnChangeStatus(status);
+        const types = state.state.types;
+        verifyTypesSet(types);
+        // const status = +data.login_phone_verify === 1 && +data.login_google_verify === 0 ? 1 : +data.login_phone_verify === 0 && +data.login_google_verify === 1 ? 2: 3;
+        OnChangeStatus(types[0]);
+        return;
       }
+      if(state.code === 'fail' && state.state){
+        if(state.state.code === 10){
+          OnChangeStatus('');
+          loginFailedSet(true);
+        }
+        const message = state.state.message ? state.state.message : String(state.state);
+        alert(message);
+      }
+      if(state.code === 'success'){
+        onSuccess();
+      }
+      /**eslint-disable */
     });
 
     return () => {
@@ -139,7 +159,7 @@ const LoginForm = ({I18n, type, onSuccess=()=>{}, OnChangeStatus=()=>{}}: LoginF
     /**eslint-disable */
   }, []);
 
-  return !doubleVerifyParams || loginFailed   
+  return !verifyTypes || loginFailed   
   ? <Form ref={ (ref: any) => ref && loginService.registerValidate(() => ref.validate()) }>
     {
       isPhone
@@ -176,13 +196,21 @@ const LoginForm = ({I18n, type, onSuccess=()=>{}, OnChangeStatus=()=>{}}: LoginF
       </div>
     </FormItem>
   </Form> 
-  : <DoubleVerifyFactory
-    params={ doubleVerifyParams }
-    account={ isPhone ? {number: username, country: areaCode.replace("+", '00')} : {email: username} }
+  : <DoubleVerify 
+    types={ verifyTypes }
     I18n={I18n}
-    onSubmit={params => doubleVerifySuccess(params)}
-    onEmitStatus={(status) => {OnChangeStatus(status)}}
+    loading={loading}
+    onEmitStatus={(type)=>OnChangeStatus(type)}
+    account={ isPhone ? { number: username, country: areaCode.replace('+', '00') } : { email: username.toLocaleLowerCase() } }
+    onSubmit={ params => doubleVerifySuccess(params) }
   />;
+  // <DoubleVerifyFactory
+  //   params={ doubleVerifyParams }
+  //   account={ isPhone ? {number: username, country: areaCode.replace("+", '00')} : {email: username} }
+  //   I18n={I18n}
+  //   onSubmit={params => doubleVerifySuccess(params)}
+  //   onEmitStatus={(status) => {OnChangeStatus(status)}}
+  // />;
 };
 
 interface DoubleVerifyFactoryProps {

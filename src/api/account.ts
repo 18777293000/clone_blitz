@@ -107,3 +107,8 @@ export const queryPhoneCode = (params: any) => {
   params1 = Object.assign({signature: signature}, params1);
   return post(`/proxy/v2/user/account/m_get_phone_code`, {body: params1});
 };
+
+//邮箱验证码：邮箱注册/忘记密码(需要人机校验)
+export const getEmailVerifyCode = (params: any) => {
+  return post(`/proxy/v2/user/account/w_get_email_verify_code`, {body: params});
+}

@@ -67,7 +67,9 @@ export const ForgetPsw = ({type, I18n, onSuccess=()=>{}}: ForgetPSWProps) => {
   }, []);
 
   return (
-    <Form></Form>
+    <Form ref={ (ref: any) => ref && service.current.registerValidate(() => ref.validate()) }>
+      
+    </Form>
   )
 };
 

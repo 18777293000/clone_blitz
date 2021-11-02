@@ -11,6 +11,7 @@ import { Tabs, TabItem } from "../../../../frame/tabs/tabs";
 
 import Login from '../../../../render/account/components/login';
 import Signup from 'render/account/components/signup';
+import ForgetPsw from 'render/account/components/forgotPassword';
 const session = new Storage('session');
 export default ({type = 'login'} : { type: string }) => {
   const navigate = useNavigate();
@@ -29,7 +30,8 @@ export default ({type = 'login'} : { type: string }) => {
 
   const map = {
     login: <Login onSuccess={goBack} I18n={I18n} />,
-    signup: <Signup onSuccess={goBack} I18n={I18n} />
+    signup: <Signup onSuccess={goBack} I18n={I18n} />,
+    forget: <ForgetPsw onSuccess={() => navigate('/account/login')} I18n={I18n} />
   };
   //@ts-ignore
   const switchComponent = map[type];

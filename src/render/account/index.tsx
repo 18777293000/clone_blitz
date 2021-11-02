@@ -32,6 +32,13 @@ export default () => {
              canActive={() => auth$.pipe(map(val => !val))}
              redirect='/' />
            }></Route>
+           <Route path='/forgetPassword' element={
+             <AuthGuard
+              Component={ <Account type='forget' /> }
+              canActive={() => auth$.pipe(map(val => !val))}
+              redirect='/'
+             />
+           }></Route>
         </Routes>
       </Suspense>
     </div>

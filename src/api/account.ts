@@ -169,3 +169,32 @@ export const signup = async (reqUser: any) => {
     return response;
   });
 };
+
+export const resetPasswordByEamil = (req: any) => {
+  const auth   = new Auth(req.password, enviroment.salt, enviroment.publicKey, true);
+  const EHUP   = auth.ehup();
+  const params = {
+    code : req.code,
+    email: req.email,
+    EHUP,
+  };
+  return post(`/proxy/v2/user/account/m_reset_password_by_email`, {body: params});
+};
+
+export const resetPasswordByPhone = (req: any)=> {
+    const auth = new Auth(req.password, enviroment.salt, enviroment.publicKey, true);
+		const EHUP  = auth.ehup();
+		const id = req.areaCode.replace('+', '00') + req.phoneNumber
+    const params = {
+			verify    : {
+				way : 0,
+				code: req.code,
+			},
+			identifier: {
+				type: 2,
+				id  : id,
+			},
+			EHUP,
+    };
+    return post(`/proxy/v1/account/m_reset_password`, {body: { data: params }});
+};

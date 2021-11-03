@@ -198,3 +198,12 @@ export const resetPasswordByPhone = (req: any)=> {
     };
     return post(`/proxy/v1/account/m_reset_password`, {body: { data: params }});
 };
+
+
+export const getIpInfo = () => { // 获取ip信息
+  const url = `/geoip/country2`;
+  return {
+    key: url,
+    promise: () => get(url)
+  }
+};

@@ -5,6 +5,7 @@ import { Tabs, TabItem } from "frame/tabs/tabs";
 import { Input } from "frame/input/input"; 
 import './style.scss';
 import { emailForgetPswService, phoneForgetPswService } from "services/account/forget.password";
+import { formatRules } from "render/account/utils";
 
 interface ForgetPSWProps {
   type?: 'phone' | 'email';
@@ -68,7 +69,11 @@ export const ForgetPsw = ({type, I18n, onSuccess=()=>{}}: ForgetPSWProps) => {
 
   return (
     <Form ref={ (ref: any) => ref && service.current.registerValidate(() => ref.validate()) }>
-      
+      <FormItem rules={ formatRules(type === 'phone' ? rules.phone : rules.email, I18n) }>
+        {
+          isPhone ? <div>123</div> : null
+        }
+      </FormItem>
     </Form>
   )
 };
@@ -77,19 +82,19 @@ export default ({ I18n, onSuccess = () => {}, isPop = false }:ForgetPSWProps) =>
 	const actionRender = ()=>{
     const { Link } = require('react-router-dom');
     return <div className="bktrade-account-actions">
-      <Link to="/account/login"><span>{I18n['登录']}</span></Link>&nbsp; | &nbsp;
-      <Link to="/account/signup"><span>{I18n['注册']}</span></Link>
+      <Link to="/account/login"><span>{'登录'}</span></Link>&nbsp; | &nbsp;
+      <Link to="/account/signup"><span>{'注册'}</span></Link>
     </div>
 	}
 
 	return(
 		<div className="bktrade-signin-signup">
-			<p className="bktrade-account-title"><span className="title-text">{I18n['找回密码']}</span><span className="title-line"></span></p>
+			<p className="bktrade-account-title"><span className="title-text">{'找回密码'}</span><span className="title-line"></span></p>
 			<Tabs value={ 'email' }>
-				<TabItem value="email" label={I18n['邮箱']}>
+				<TabItem value="email" label={'邮箱'}>
 					<ForgetPsw type="email" I18n={I18n} onSuccess={onSuccess}/>
 				</TabItem>
-				<TabItem value="phone" label={I18n['手机']}>
+				<TabItem value="phone" label={'手机'}>
 					<ForgetPsw type="phone" I18n={I18n} onSuccess={onSuccess}/>
 				</TabItem>
 			</Tabs>

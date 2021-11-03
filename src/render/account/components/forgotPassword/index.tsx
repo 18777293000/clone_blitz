@@ -5,7 +5,10 @@ import { Tabs, TabItem } from "frame/tabs/tabs";
 import { Input } from "frame/input/input"; 
 import './style.scss';
 import { emailForgetPswService, phoneForgetPswService } from "services/account/forget.password";
-import { formatRules } from "render/account/utils";
+import { formatRules, isEmail } from "render/account/utils";
+import PhoneInput from 'render/account/components/phone.input';
+import CodeItem from 'render/account/components/code.item';
+import { getEmailVerifyCode, queryPhoneCode } from "api/account";
 
 interface ForgetPSWProps {
   type?: 'phone' | 'email';
@@ -71,8 +74,47 @@ export const ForgetPsw = ({type, I18n, onSuccess=()=>{}}: ForgetPSWProps) => {
     <Form ref={ (ref: any) => ref && service.current.registerValidate(() => ref.validate()) }>
       <FormItem rules={ formatRules(type === 'phone' ? rules.phone : rules.email, I18n) }>
         {
-          isPhone ? <div>123</div> : null
+          isPhone ? <PhoneInput
+            placeholder='输入手机号'
+            onEnter={() => submit()}
+            onChange={(key: string, e: any) => change(e, map[key], key)}
+            onStateChange={(phoneValid: boolean) => usernameValidSet(phoneValid)}
+          ></PhoneInput>
+          : <Input
+            type='text'
+            size='normal'
+            value={username}
+            onEnter={() => submit()}
+            placeholder='请输入邮箱'
+            onChange={(value: any) => { usernameValidSet(isEmail(value));change(value, usernameSet, 'email') }}
+          ></Input>
         }
+      </FormItem>
+      <FormItem rules={ formatRules(rules.password, I18n) }>
+        <Input
+          type='password'
+          autoComplete='new-password'
+          size='normal'
+          value={password}
+          onEnter={ ()=> submit() }
+          onChange={(e: any) => change(e, passwordSet, 'password')}
+          placeholder='设置新密码'
+        ></Input>
+      </FormItem>
+      <CodeItem
+        api={type === 'phone' ? queryPhoneCode : getEmailVerifyCode}
+        rule={ formatRules(rules.code, I18n) }
+        placeholder={type === 'phone' ? '请输入手机验证码' : '请输入邮箱验证码'}
+        account={ isPhone ? {number: username, country: areaCode.replace('+', '00')} : {email: username} }
+        accountValid={usernameValid}
+        codeType='reset_password'
+        onChange={(e: any) => change(e, () => {}, 'code')}
+        onSubmit={submit}
+      ></CodeItem>
+      <FormItem>
+        <div>
+          <Button type='primary' isBlock={true} loading={loading} onClick={()=>submit()}>完成</Button>
+        </div>
       </FormItem>
     </Form>
   )

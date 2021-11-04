@@ -21,6 +21,7 @@ import { BKTradeHeader } from './render/layout/components/header/header';
 
 import Help from './render/help';
 import Account from './render/account';
+import OTC from './render/otc';
 
 const Notice = lazy(() => import('./render/help/pages/notices/notices'));
 const NoticesDetail = lazy(() => import('./render/help/pages/notices.detail/notices.detail'));
@@ -137,6 +138,7 @@ const App = () => {
             <Route path="/notices" element={ <Notice /> } />
             <Route path='/notices/detail' element={ <NoticesDetail/> } />
             <Route path='/help/*' element={ <Help /> } />
+            <Route path='/otc/*' element={ <OTC /> }></Route>
           </Routes>
         </Suspense>
       </div>

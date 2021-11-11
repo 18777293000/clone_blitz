@@ -61,4 +61,9 @@ export const getBrowserInfo = () => {
     return agent.match(regStr_opera)[0];
   }
   return '--';
+};
+
+export function toThousands(num: any){
+  if(isNaN(Number(num))){return ''};
+  
 }

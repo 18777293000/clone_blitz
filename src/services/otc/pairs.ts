@@ -31,7 +31,7 @@ export class OTCPairsService {
   };
 
   private _pairs$ = new BehaviorSubject<any>(null);
-  private pairs$ = this._pairs$.asObservable();
+  public pairs$ = this._pairs$.asObservable();
 
   constructor(
     private storageService: LocalStorageService
@@ -99,4 +99,8 @@ export class OTCPairsService {
     return this.getPairs();
   };
 
+};
+
+export const otcPairsServiceFactory = () => {
+  return container.resolve(OTCPairsService);
 };

@@ -1,0 +1,1 @@
+export type OrdersType = 'open'|'condition'|'time'|'history';

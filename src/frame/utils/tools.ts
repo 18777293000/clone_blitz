@@ -65,5 +65,21 @@ export const getBrowserInfo = () => {
 
 export function toThousands(num: any){
   if(isNaN(Number(num))){return ''};
-  
+  const Symbol = +num < 0 ? '-' : '';
+  let counter = 0;
+  const nums = +num < 0 ? num.toString().split('-')[1].split('.') : num.toString().split('.');
+  const result: any = [];
+  const numStrs = (nums[0] || 0).toString().split('');
+  console.log('len', numStrs);
+  for(let i = numStrs.length - 1; i >=0; i--){
+    counter++;
+    result.unshift(numStrs[i]);
+    if(!(counter % 3) && i !== 0){
+      result.unshift(',');
+    }
+    console.log(result);
+  }
+  nums[0] = result.join('');
+  const str = nums[1] ? (nums[0] + '.' + nums[1]) : nums[0];
+  return Symbol + str;
 }

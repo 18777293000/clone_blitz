@@ -19,7 +19,7 @@ export const mul = function(num: number, arg: number){
   return Number(s1.replace('.', '')) * Number(s1.replace('.', '')) / Math.pow(10, m);
 };
 
-export const divition = function(num: number, arg: number){
+export const division = function(num: number, arg: number){
   let t1 = 0, r1, r2;
   let t2 = 0;
   const s1 = exponentialToString(num).toString(), s2 = exponentialToString(arg).toString();

@@ -82,4 +82,61 @@ export function toThousands(num: any){
   nums[0] = result.join('');
   const str = nums[1] ? (nums[0] + '.' + nums[1]) : nums[0];
   return Symbol + str;
+};
+
+export function computPrecision(num: number): number{
+  if(+num === 0){
+    return 2;
+  }
+
+  if(num <= 0.000001){
+    return 10;
+  }else if(num <= 0.0001){
+    return 8;
+  }else if(num <= 0.01){
+    return 6;
+  }else if(num <= 1){
+    return 4
+  }else if(num > 100000){
+    return 0
+  }else {
+    return 2
+  }
 }
+
+export const computedData = function(day: number, offset: number){
+  const nowTime = new Date();
+  const endTime = new Date(`${nowTime.getFullYear()}/${nowTime.getMonth() + 1}/${nowTime.getDate()} 23:59:59`)
+  const timeStr = endTime.getTime() - day * 24 * 60 * 60 * 1000 + offset;
+  const startTime = new Date(timeStr);
+
+  return {
+    y: startTime.getFullYear(),
+    m: startTime.getMonth() + 1,
+    d: startTime.getDate(),
+  }
+};
+
+export function currencyToSymbol(currency: string){
+  const symbolMap = {
+    CNY: '¥',
+    USD: '$',
+    BTC: '฿',
+    LTC: 'L',
+    DOG: 'D',
+    BTS: 'S',
+    YUN: 'Y',
+    USDT: '₮',
+    ETH: 'E',
+    JPY: 'JPY¥',
+    EUR: '€',
+    GBP: '£',
+    KRW: '₩',
+    BRL: 'R$',
+    AUD: 'AUD',
+    BCH: 'BCH',
+    QC: 'QC',
+  };
+  // @ts-ignore
+  return symbolMap[currency] || ''
+};

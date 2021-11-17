@@ -33,4 +33,12 @@ export function formatNumber(num: string | number, format?: string): any {
     }
     return lastNum;
   }
+};
+
+type Roundtag = 'round' | 'floor' | 'ceil';
+
+export function toFixedFix(number: string | number, decimals: number, roundtag: Roundtag = 'round'){
+  const k = Math.pow(10, decimals);
+  //@ts-ignore
+  return '' + parseFloat(Math[roundtag](parseFloat((number * k).toFixed(decimals * 2))).toFixed(decimals * 2)) / k;
 }

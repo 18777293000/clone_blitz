@@ -18,8 +18,18 @@ import { globalConfigerviceFactory } from "services/global/config";
 import { otcPairsServiceFactory } from "services/otc/pairs";
 import { userServiceFactory } from "services/account/user";
 import { IPayment } from "types/otc";
+import { NumberPassword } from 'frame/number.password/number.password';
 
 export default () => {
-  console.log(toThousands('100000'));
-  return <div>👴</div>
+  const complate = (value: any) => {
+    console.log('res', value);
+  };
+  return (
+    <div>
+      👴
+      <div>
+        <NumberPassword onComplate={complate} num={1} />
+      </div>
+    </div>
+  )
 }

@@ -207,3 +207,25 @@ export const getIpInfo = () => { // 获取ip信息
     promise: () => get(url)
   }
 };
+
+export const checkSecurityPassword = (req: {
+  token: string;
+  sp: number | string;
+  id: number | string;
+}) => {
+  const url = `/proxy/v2/user/account/m_check_security_password`;
+  const esign: any = {
+    token: req.token,
+    sp: req.sp + '',
+  };
+  const params = {
+    access: { type: 0, id: req.id },
+    esign,
+  };
+  return {
+    key: url,
+    promise: () => post(url, {
+      body: JSON.parse(JSON.stringify(params))
+    })
+  }
+}

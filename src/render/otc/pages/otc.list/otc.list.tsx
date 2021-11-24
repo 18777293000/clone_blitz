@@ -18,7 +18,7 @@ import { globalConfigerviceFactory } from "services/global/config";
 import { otcPairsServiceFactory } from "services/otc/pairs";
 import { userServiceFactory } from "services/account/user";
 import { IPayment } from "types/otc";
-import { NumberPassword } from 'frame/number.password/number.password';
+import { SafetyTips } from 'render/account/components/safety.verify';
 
 export default () => {
   const complate = (value: any) => {
@@ -28,7 +28,7 @@ export default () => {
     <div>
       👴
       <div>
-        <NumberPassword onComplate={complate} num={1} />
+        <SafetyTips tips='test' onNavigate={(value: any)=>{console.log(value)}} />
       </div>
     </div>
   )

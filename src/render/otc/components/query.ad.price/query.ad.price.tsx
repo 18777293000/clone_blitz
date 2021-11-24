@@ -43,7 +43,7 @@ export const QueryADPrice = ({limit, direction, coin, id, payments, I18n, curren
 
     if(!user){
       isLoadingSet(false);
-
+      
     }
   }
 };

@@ -228,4 +228,19 @@ export const checkSecurityPassword = (req: {
       body: JSON.parse(JSON.stringify(params))
     })
   }
+};
+
+//手机验证码：修改密码/申请重置手机/绑定谷歌
+export const getPhoneCode = (params: any) => {
+  let params1      = Object.assign({ time: Math.floor(new Date().getTime() / 1000) + '' }, params);
+  let signatureArr = Object.values(params1);
+  signatureArr     = signatureArr.sort();
+  const signature  = Auth.HmacSHA256(JSON.stringify(signatureArr), enviroment.verifySalt);
+  params1          = Object.assign({ signature: signature }, params1);
+  return post(`/proxy/v2/user/account/m_get_phone_code`, {body: params1})
+}
+
+//邮箱验证码：绑定邮箱/绑定谷歌(不需要人机校验)
+export const getEmailCode = (params: any) => {
+  return post(`/proxy/v2/user/account/w_get_email_code`, {body: params});
 }

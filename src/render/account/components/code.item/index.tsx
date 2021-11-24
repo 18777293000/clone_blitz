@@ -17,6 +17,7 @@ interface CodeItemProps {
 	needCheck?:boolean;
 	onChange?:Function;
 	onSubmit?:Function;
+  isResend?:boolean;
 };
 
 export default ({
@@ -29,7 +30,8 @@ export default ({
 	account={},
 	accountValid=true,
 	onChange = () => {}, 
-	onSubmit=()=> {}
+	onSubmit=()=> {},
+  isResend = false,
 }: CodeItemProps) => {
   const [ voiceShow, voiceShowSet ] = useState<boolean>(false);
   const [ code, codeSet ] = useState<string>('');
@@ -65,6 +67,7 @@ export default ({
               needCheck={needCheck}
               codeType={codeType}
               disabled={smsDisabled}
+              isResend={isResend}
               service={phoneCodeService(SMSCodeService)}
               onStateChange={(value: boolean, voiceShow: boolean) => change('sms', value, voiceShow)}
               onSuccess={ (result: any) => robotResultSet(result) }
@@ -79,6 +82,7 @@ export default ({
             account={account}
             codeType={codeType}
             disabled={voiceDisabled}
+            isResend={isResend}
             service={phoneCodeService(VoiceCodeService)}
             onStateChange={(value: boolean) => change("voice", value)}
             onSuccess={(result: any) => robotResultSet(result)}

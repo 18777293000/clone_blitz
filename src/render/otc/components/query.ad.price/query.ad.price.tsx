@@ -17,6 +17,7 @@ import { showSPTips } from "render/otc/components/account.tips/index";
 import { IPayment } from "types/otc";
 import { i18nTool } from "i18n/index";
 import './style.scss';
+import { AccountCommands } from "common/commands/account";
 
 interface QueryADPriceProps {
   id: string;
@@ -43,7 +44,29 @@ export const QueryADPrice = ({limit, direction, coin, id, payments, I18n, curren
 
     if(!user){
       isLoadingSet(false);
-      
-    }
+      commandManagerService.current.exe(AccountCommands.SHOW_ACCOUNT_DIALOG);
+      return;
+    };
+    if(!user?.securityConfig?.SPEnabled){
+      isLoadingSet(false);
+      showSPTips({
+        onOk: () => navigate('/account/sp/set'),
+      });
+      return;
+    };
+    queryADPrice({ adId: id, shift_account: 1 }).promise().then((res: any) => {
+      isLoadingSet(false);
+
+      dialogIns.current = dialog({
+        model: DialogModel.minWin,
+        title: '购买',
+        content: (
+          <div>123</div>
+        )
+      })
+    }).catch(error => {
+      isLoadingSet(false);
+      alert(error.message);
+    })
   }
 };

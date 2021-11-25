@@ -26,9 +26,35 @@ export default ({defaultType = 'login', onSuccess = () => {}}:{defaultType?: 'lo
     forget: <ForgetPsw onSuccess={() => typeSet('login')} I18n={I18n} isPop={true} />
   }
 
+  //@ts-ignore
+  const switchComponent = map[type] || null;
+  
   return (
     <div>
-      👴
+      <div>
+        <div>
+          <p><span>确认您在访问</span>{ url }</p>
+          <div>
+            { switchComponent }
+
+            <div>
+              {
+                type === 'login' ? <>
+                  <span onClick={() => typeSet('forget')}>忘记密码</span>
+                  没有账户？<span onClick={() => {typeSet('signup')}}>注册</span>
+                </> : null
+              }
+              { type === 'signup' ? <p>已有账户<span onClick={()=>typeSet('login')}>登陆</span></p> : null }
+              {
+                type === 'forget' ? <>
+                  <span onClick={()=>typeSet('login')}>登陆</span>
+                  <span onClick={()=>typeSet('signup')}>注册</span>
+                </> : null
+              }
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 };
